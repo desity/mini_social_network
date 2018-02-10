@@ -11,13 +11,11 @@ from .clearbit import clearbit_def
 from .emailhunter import verify_email
 
 
-
-
 #API
 class Registration(APIView):
-    # Allow any user (authenticated or not) to hit this endpoint.
     permission_classes = (AllowAny,)
     serializer_class = RegistrationSerializer
+
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
         deliver(request.data['email'])
@@ -27,7 +25,6 @@ class Registration(APIView):
         if k != None:
             request.data['first_name'] = k.split(' ')[0]
             request.data['last_name'] = k.split(' ')[1]
-        #erialized = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -35,7 +32,6 @@ class Registration(APIView):
 
 
 class PostList(APIView):
-    #permission_classes = (IsAuthenticatedOrReadOnly)
 
     def get(self, request, format=None):
         posts = Post.objects.all()
@@ -56,6 +52,7 @@ class PostList(APIView):
 
 class UserPosts(APIView):
     permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         posts = Post.objects.filter(author_id=User.objects.get(username=request.user.username).pk)
         serializer = StarnaviSerializer(posts, many=True)
@@ -74,7 +71,6 @@ class UserPosts(APIView):
 
 
 class PostLikeDislike(APIView):
-    #permission_classes = (IsAuthenticated)
 
     def get(self, request, pk, format=None):
         lds = Like_Unlike.objects.filter(login_id=User.objects.get(username=request.user.username).pk, post_id=pk)
@@ -94,40 +90,3 @@ class PostLikeDislike(APIView):
             t.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#class PostLikeDislike(APIView):
-#    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly,)
-
-
-# class PostList(generics.ListCreateAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = StarnaviSerializer
-#     permission_classes = (IsAuthenticated,)
-#     #permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-#
-#
-# class LikeUnlikelist(generics.ListCreateAPIView):
-#      queryset = Like_Unlike.objects.all()
-#      serializer_class = Like_UnlikeSerializer
-#      permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-
-# class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = StarnaviSerializer
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-#                           IsOwnerOrReadOnly,)
-
-# class UserList(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (IsOwnerOrReadOnly,)
-#
-# class UserDetail(generics.RetrieveAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = (IsOwnerOrReadOnly,)
-
-# class LikeUnlikelist(generics.ListCreateAPIView):
-#     queryset = Like_Unlike.objects.all()
-#     serializer_class = Like_UnlikeSerializer
-#     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
