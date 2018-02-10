@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+    Welcome into our network, {{ user.first_name }} {{ user.last_name }}<br>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"
+            onclick="$('#addpostmodal').modal('show')">
+        add post
+    </button>
+    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"
+            onclick="$('#logoutmodal').modal('show')">
+        Log out
+    </button>
+
+    <form class="formsignout" method="POST">
+        {% csrf_token %}
+        {% for post in posts %}
+            <h1>{{ post.title }}</h1>
+            <h4>{{ post.text }}</h4>
+            <strong>Author name: {{ post.author_id.first_name }} {{ post.author_id.last_name }}</strong>
+            created date: {{ post.created_date }}
+            <button class="btn btn-primary btn-sm" name="_like" type="submit" value="{{ post.pk }}">
+            Likes:   {{ post.like }}
+            </button>
+            <button class="btn btn-danger btn-sm" name="_dislike" type="submit" value="{{ post.pk }}">
+                Dislikes:  {{ post.dislike }}
+            </button>
+            <br>
+        {% endfor %}
+    </form>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg" id="addpostmodal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Please, enter your post theme and post text</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="" class="formaddpost" method="POST">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <input type="text" required="" name="post_theme" class="form-control" id="formGroupExampleInput"
+                               placeholder="Post theme">
+                        <textarea class="form-control" required="" name="post_text" id="exampleTextarea"
+                                  rows="10"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit" name="_addpost">Add post</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="logoutmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Star social network</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Do you want to logout from our system?
+                </div>
+                <div class="modal-footer">
+                    <form class="formsignout" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-sm btn-danger" type="submit" name="_signout">
+                            Sign out
+                        </button>
+                    </form>
+                    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

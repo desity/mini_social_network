@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block content %}
+    <!-- Button trigger modal -->
+    <div class="alert alert-warning alert-dismissible fade show" role="alert"
+         id="alert_message"
+         style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Warning!</strong> {{ message }}
+    </div>
+
+    <button class="btn btn-md btn-success btn-block" type="submit" name="_signout"
+            onclick="$('#myModal').modal('show')">
+        Sign in
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Please login or register</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="form-signin">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#signin" role="tab">Sign in</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#signup" role="tab">Sign up</a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="signin" role="tabpanel">
+                                    <form class="formsignin" method="POST">
+                                        {% csrf_token %}
+                                        <label for="Login_in" class="sr-only">text</label>
+                                        <input type="text" class="form-control" placeholder="Login"
+                                               name="Login_in"
+                                               required="" autofocus="">
+                                        <label for="Password_in" class="sr-only">Password</label>
+                                        <input type="password" class="form-control"
+                                               placeholder="Password"
+                                               name="Password_in"
+                                               required="">
+                                        <button class="btn btn-md btn-success btn-block" type="submit" name="_signin">
+                                            Sign in
+                                        </button>
+                                        <button class="btn btn-sm btn-info btn-block" type="submit" name="Iforgot">I
+                                            forgot
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="signup" role="tabpanel">
+                                    <form class="formsignup" method="POST">
+                                        {% csrf_token %}
+
+                                        <label for="FirstName_up" class="sr-only">Login</label>
+                                        <input type="text" class="form-control"
+                                               placeholder="First Name"
+                                               required="" name="FirstName_up">
+
+                                        <label for="LastName_up" class="sr-only">Login</label>
+                                        <input type="text" class="form-control"
+                                               placeholder="Last Name"
+                                               required="" name="LastName_up">
+
+                                        <label for="Email_up" class="sr-only">Email address</label>
+                                        <input type="email" class="form-control"
+                                               placeholder="Email address"
+                                               required="" autofocus="" name="Email_up">
+
+                                        <label for="Login_up" class="sr-only">Login</label>
+                                        <input type="text" class="form-control"
+                                               placeholder="Login"
+                                               required="" name="Login_up">
+
+                                        <label for="signupPassword" class="sr-only">Password</label>
+                                        <input type="password" id="signupPassword" class="form-control"
+                                               placeholder="Password"
+                                               required="" name="Password_up">
+
+                                        <button class="btn btn-md btn-primary btn-block" type="submit" name="_signup">
+                                            Sign up
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog" id="info">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>ow alert
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (("{{ message }}").length > 0) {
+            document.getElementById("alert_message").style.display = "block"
+        }
+
+    </script>
+
+{% endblock %}
