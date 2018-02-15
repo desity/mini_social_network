@@ -44,12 +44,15 @@ Bot should read the configuration and create this activity:
  
   
 Notes 
-● emailhunter and clearbit have either free pricing plans or free trial, the candidate can use their own account if he would like 
+● emailhunter and clearbit have either free pricing plans or free trial,
+the candidate can use their own account if he would like 
 implement the functionality 
-● visual aspect of the project is not important, the candidate can create a frontend for viewing the result,
+● visual aspect of the project is not important,
+the candidate can create a frontend for viewing the result,
 but it is not necessary(will be a plus).
 Clean and usable REST API is important 
-● the project is not defined in detail, the candidate should use their best judgment for every non-specified requirements 
+● the project is not defined in detail,
+the candidate should use their best judgment for every non-specified requirements 
 (including chosen tech, third party apps, etc), however 
 ● every decision must be explained and backed by arguments in the interview 
 ● Result should be sent by providing a Git url. This is a mandatory requirement. 
